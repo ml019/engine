@@ -130,6 +130,36 @@
     [/#if]
 [/#macro]
 
+[#macro addEntranceSeeder type ]
+
+    [#local macroOptions = []]
+    [#list commandLineOptions.Deployment.Provider.Names as provider ]
+        [#local macroOptions +=
+            [
+                [ provider, "entrance", type, "seeder" ]
+            ]
+        ]
+    [/#list]
+
+    [#local macroOptions +=
+        [
+            [ SHARED_PROVIDER, "entrance", type, "seeder"  ]
+        ]
+    ]
+
+    [#local macro = getFirstDefinedDirective(macroOptions)]
+    [#if macro?has_content]
+        [@(.vars[macro]) /]
+    [#else]
+        [@fatal
+            message="Could not find entrance macro with provided options"
+            context=macroOptions
+            enabled=false
+        /]
+        [#stop "HamletFatal: Unable to find an entrance macro: ${type}" ]
+    [/#if]
+[/#macro]
+
 
 [#-------------------------------------------------------
 -- Internal support functions for entrance  processing      --

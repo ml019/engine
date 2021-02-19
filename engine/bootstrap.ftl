@@ -70,11 +70,10 @@
 
 [#-- Load and setup the basics of the shared provider --]
 [@includeProviders SHARED_PROVIDER /]
-[@seedProviderInputSourceData
-    providers=[ SHARED_PROVIDER ]
-    inputTypes=[ "commandlineoption" ]
 
-/]
+[#-- Establish the desired input source --]
+[@setInputSource getInputCommandLineOptions().Input.Source /]
+
 [@includeCoreProviderConfiguration SHARED_PROVIDER /]
 [@seedProviderInputSourceData
     providers=[ SHARED_PROVIDER ]
@@ -98,10 +97,9 @@
 
 [#-- Load providers base on the providers list  --]
 [@includeProviders commandLineOptions.Deployment.Provider.Names /]
-[@seedProviderInputSourceData
-    providers=commandLineOptions.Deployment.Provider.Names
-    inputTypes=[ "commandlineoption" ]
-/]
+
+[#-- TODO(mfl) remove once migration to input source structure is complete --]
+[@setInputSource getInputCommandLineOptions().Input.Source /]
 
 [@includeCoreProviderConfiguration commandLineOptions.Deployment.Provider.Names /]
 

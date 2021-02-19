@@ -125,7 +125,71 @@
             }
         )
     ]
+[/#function]
 
+[#function shared_input_commandlineoptions_composite_seeder filter state]
+    [#return
+        mergeObjects(
+            shared_input_commandlineoptions_seeder(filter, state),
+            {
+                "CommandLineOptions" : {
+                    "References" : {
+                        "Request" : requestReference!"",
+                        "Configuration" : configurationReference!""
+                    },
+                    "Composites" : {
+                        "Blueprint" : (blueprint!"")?has_content?then(
+                                            blueprint?eval,
+                                            {}
+                        ),
+                        "Settings" : (settings!"")?has_content?then(
+                                            settings?eval,
+                                            {}
+                        ),
+                        "Definitions" : ((definitions!"")?has_content && (!definitions?contains("null")))?then(
+                                            definitions?eval,
+                                            {}
+                        ),
+                        "StackOutputs" : (stackOutputs!"")?has_content?then(
+                                            stackOutputs?eval,
+                                            []
+                        )
+                    },
+                    "Regions" : {
+                        "Segment" : region!"",
+                        "Account" : accountRegion!""
+                    }
+                }
+            }
+        )
+    ]
+[/#function]
+
+[#function shared_input_commandlineoptions_mock_seeder filter state]
+    [#return
+        mergeObjects(
+            shared_input_commandlineoptions_seeder(filter, state),
+            {
+                "CommandLineOptions" : {
+                    "Regions" : {
+                        "Segment" : "mock-region-1",
+                        "Account" : "mock-region-1"
+                    },
+                    "References" : {
+                        "Request" : "SRVREQ01",
+                        "Configuration" : "configRef_v123"
+                    },
+                    "Run" : {
+                        "Id" : "runId098"
+                    }
+                }
+            }
+        )
+    ]
+[/#function]
+
+[#function shared_input_commandlineoptions_whatif_seeder filter state]
+    [#return shared_input_commandlineoptions_composite_seeder(filter, state)]
 [/#function]
 
 [#function shared_input_qualify_seeder filter state]

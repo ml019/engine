@@ -11,8 +11,10 @@
     [/#if]
 [/#macro]
 
-[#-- Command line options used across a lot of different places --]
-[#macro setDeploymentUnit deploymentUnit ]
+[#--
+TODO(mfl) Commented out - remove when absence of use confirmed across engine
+--]
+[#--macro setDeploymentUnit deploymentUnit ]
     [@addCommandLineOption
         option={
             "Deployment" : {
@@ -22,7 +24,7 @@
             }
         }
     /]
-[/#macro]
+[/#macro--]
 
 [#function getDeploymentUnit ]
     [#return (commandLineOptions["Deployment"]["Unit"]["Name"])!"" ]
@@ -31,6 +33,7 @@
 [#function getDeploymentGroup ]
     [#return (commandLineOptions["Deployment"]["Group"]["Name"])!"" ]
 [/#function]
+
 [#-----------------------------------------------------
 -- Internal support functions for blueprint processing --
 -------------------------------------------------------]

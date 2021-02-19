@@ -162,6 +162,11 @@ Set the current input source
 [#assign currentInputSource ="" ]
 [#macro setInputSource inputSource]
     [#assign currentInputSource = inputSource ]
+
+    [#-- TODO(mfl) remove once migration to new input source structure complete --]
+    [#-- refresh commandLineOptions on switch of inpout source --]
+    [@addCommandLineOption getInputCommandLineOptions() /]
+
 [/#macro]
 
 [#--
@@ -214,5 +219,31 @@ Get the state for the current input source and filter
     [/#list]
 
     [#return state]
+[/#function]
+
+[#function getInputCommandLineOptions ]
+
+    [#local options = getInputState().CommandLineOptions!{} ]
+    [#-- TODO(mfl) remove once migration to new input source structure complete --]
+        [@addCommandLineOption options /]
+
+
+    [#return options ]
+[/#function]
+
+[#function getInputBlueprint ]
+    [#return getInputState().Blueprint!{} ]
+[/#function]
+
+[#function getInputSettings ]
+    [#return getInputState().Settings!{} ]
+[/#function]
+
+[#function getInputStackOutputs ]
+    [#return getInputState().StackOutputs!{} ]
+[/#function]
+
+[#function getInputDefinitions ]
+    [#return getInputState().Definitions!{} ]
 [/#function]
 
